@@ -1,25 +1,8 @@
 const liquidityController = require('../controllers/liquidity.controller');
+const tokenManageController = require('../controllers/tokenManage.controller');
 
 module.exports = (app) => {
     var router = require("express").Router();
-
-    // Route to get all posts
-    router.get("/get", (req, res) => {
-        console.log("kwg");
-    });
-
-    // Route to get one post
-    router.get("/getFromId/:id", (req, res) => {
-
-        const id = req.params.id;
-        db.query("SELECT * FROM posts WHERE id = ?", id, (err, result) => {
-            if (err) {
-                console.log(err)
-            }
-            res.send(result)
-        }
-        );
-    });
 
     // Route for creating the post
     router.post('/pool/create_pool', (req, res) => {
@@ -39,16 +22,16 @@ module.exports = (app) => {
         liquidityController.get_pool(req, res);
     });
 
-    // Route to delete a post
+    router.post('/token_import', (req, res) => {
+        tokenManageController.token_import(req, res);
+    });
 
-    router.delete('/delete/:id', (req, res) => {
-        const id = req.params.id;
+    router.get('/get_tokens/:chain_id', (req, res) => {
+        tokenManageController.get_tokens(req, res);
+    });
 
-        db.query("DELETE FROM posts WHERE id= ?", id, (err, result) => {
-            if (err) {
-                console.log(err)
-            }
-        })
-    })
+    router.get('/token_filter/:data', (req, res) => {
+        tokenManageController.token_filter(req, res);
+    });
     app.use('/api', router);
 };
