@@ -4,7 +4,6 @@ const tokenManageController = require('../controllers/tokenManage.controller');
 module.exports = (app) => {
     var router = require("express").Router();
 
-    // Route for creating the post
     router.post('/pool/create_pool', (req, res) => {
         liquidityController.create_pool(req, res);
     })
@@ -13,7 +12,6 @@ module.exports = (app) => {
         liquidityController.filter_pool(req, res);
     })
 
-    // Route for like
     router.get('/pool/get_pools/:chain_id', (req, res) => {
         liquidityController.get_pools(req, res);
     });
